@@ -1,30 +1,18 @@
 import { onMounted } from "vue";
-import { Todo, RawTodo } from '@/types';
+import { Todo } from '@/types';
 import { useStore } from '@/store'
+import { ActionTypes } from '@/store/action-types'
+import { MutationTypes } from '@/store/mutation-types'
 
 export default function useTodos(): { todos: Array<Todo>, addTodo: (todo: Todo) => void } {
   const store = useStore()
 
-  // 获取远程 todos
-  const fetchTodos = async () => {
-    const response = await fetch(
-      "https://jsonplaceholder.typicode.com/todos?_limit=5"
-    );
-    const rawTodos = await response.json();
-    const todos = rawTodos.map((todo: Partial<RawTodo>) => ({
-      id: todo.id,
-      content: todo.title,
-      completed: todo.completed,
-    }));
-    store.commit('setTodos', todos)
-  };
-
   onMounted(() => {
-    fetchTodos();
+    store.dispatch(ActionTypes.FETCH_TODOS);
   });
 
   return {
     todos: store.state.todos,
-    addTodo: (todo) => store.commit('addTodo', todo),
+    addTodo: (todo) => store.commit(MutationTypes.ADD_TODO, todo),
   };
 }
