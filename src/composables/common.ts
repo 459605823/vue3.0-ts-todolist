@@ -4,7 +4,6 @@ export function useAutoFocus() {
     const focusEl = ref<null | HTMLElement>(null);
     onMounted(() => {
       if (focusEl.value) {
-        console.log(focusEl);
         focusEl.value.focus();
       }
     });

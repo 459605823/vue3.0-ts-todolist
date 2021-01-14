@@ -32,7 +32,6 @@ export default defineComponent({
     console.log(useRoute());
     const store = useStore();
     const filter = ref<string>("all");
-    console.log(store);
     console.log(store.state.author);
     const { todos, addTodo } = useTodos();
     const { filteredTodos } = useFilteredTodos(filter);
@@ -46,7 +45,6 @@ export default defineComponent({
   },
   methods: {
     changeFilter(e: string) {
-      console.log(this.filter);
       console.log(isRef(this.filter));
       this.filter = e;
     },
