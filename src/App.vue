@@ -1,7 +1,7 @@
 <template>
   <main>
     <div class="container">
-      <h1>欢迎使用待办事项！</h1>
+      <h1>欢迎使用待办事项</h1>
       <todo-add :tid="todos.length" @add-todo="addTodo" />
       <todo-filter :selected="filter" @change-filter="changeFilter" />
       <todo-list :todos="filteredTodos" />
