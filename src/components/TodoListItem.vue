@@ -8,21 +8,35 @@
       />
       {{ todoItem.content }}
       <span class="check-button"></span>
+      <i
+        class="el-icon-close"
+        @click.capture.prevent="handleDelete(todoItem.id)"
+      ></i>
     </label>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent, PropType } from "vue";
-import { Todo } from "@/types";
+import { todo, response } from "@/types";
+import api from "@/api";
+import { useStore } from "@/store";
+import { ActionTypes } from "@/store/action-types";
 
 export default defineComponent({
   name: "TodoListItem",
   emits: ["change-state"],
   props: {
     todoItem: {
-      type: Object as PropType<Todo>,
+      type: Object as PropType<todo>,
       required: true,
+    },
+  },
+  methods: {
+    async handleDelete(id: string) {
+      const res = await api.delete("todo/" + id).json<response>();
+      // const store = useStore();
+      // store.dispatch(ActionTypes.FETCH_TODOS);
     },
   },
 });
@@ -81,5 +95,12 @@ export default defineComponent({
 
 .todo-item input:checked + span.check-button::after {
   opacity: 1;
+}
+
+.todo-item label i {
+  display: block;
+  position: absolute;
+  right: 0;
+  z-index: 2;
 }
 </style>

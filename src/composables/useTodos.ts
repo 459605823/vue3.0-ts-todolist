@@ -1,18 +1,30 @@
-import { onMounted } from "vue";
-import { Todo } from '@/types';
-import { useStore } from '@/store'
-import { ActionTypes } from '@/store/action-types'
-import { MutationTypes } from '@/store/mutation-types'
+import { onMounted } from 'vue';
+import { todo, response } from '@/types';
+import { useStore } from '@/store';
+import { ActionTypes } from '@/store/action-types';
+import { MutationTypes } from '@/store/mutation-types';
+import api from '@/api';
+import { ElMessage } from 'element-plus';
 
-export default function useTodos(): { todos: Array<Todo>, addTodo: (todo: Todo) => void } {
-  const store = useStore()
-
+export default function useTodos(): {
+  todos: Array<todo>;
+  addTodo: (todo: todo) => void;
+} {
+  const store = useStore();
+  const addTodo = async (todo: todo) => {
+    const res = await api.post('todo', { json: todo }).json<response>();
+    if (res.errno) {
+      store.commit(MutationTypes.ADD_TODO, todo);
+    } else {
+      ElMessage.error(res.data ? res.data : '添加todo失败');
+    }
+  };
   onMounted(() => {
     store.dispatch(ActionTypes.FETCH_TODOS);
   });
 
   return {
     todos: store.state.todos,
-    addTodo: (todo) => store.commit(MutationTypes.ADD_TODO, todo),
+    addTodo,
   };
 }

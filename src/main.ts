@@ -1,9 +1,13 @@
-import { createApp } from "vue";
-import App from "./App.vue";
-import router from "./router";
-import { store, key } from "./store";
+import { createApp } from 'vue';
+import 'element-plus/packages/theme-chalk/src/base.scss';
+import { ElMessage } from 'element-plus';
+
+import App from './App.vue';
+import router from './router';
+import { store, key } from './store';
 
 createApp(App)
   .use(store, key)
   .use(router)
-  .mount("#app");
+  .use(ElMessage)
+  .mount('#app');
