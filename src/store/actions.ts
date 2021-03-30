@@ -4,7 +4,7 @@ import { Mutations } from './mutations';
 import { ActionTypes } from './action-types';
 import { MutationTypes } from './mutation-types';
 import api from '@/api';
-import { rawTodo, response } from '@/types';
+import { rawTodo, response, todo } from '@/types';
 
 // 根据实际mutation重写commit
 type AugmentedActionContext = {
@@ -21,7 +21,7 @@ export interface Actions {
 export const actions: ActionTree<State, State> & Actions = {
   async [ActionTypes.FETCH_TODOS]({ commit }) {
     const response = await api.get('todo').json<response>();
-    const todos = response.data.map((todo: rawTodo) => ({
+    const todos: todo[] = response.data.map((todo: rawTodo) => ({
       id: todo._id,
       content: todo.content,
       completed: todo.completed,

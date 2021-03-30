@@ -10,7 +10,7 @@ export default function useTodos(): {
   addTodo: (todo: todo) => void;
 } {
   const store = useStore();
-  const addTodo = async (todo: todo) => {
+  const addTodo = async (todo: { content: string }) => {
     const res = await api.post('todo', { json: todo }).json<response>();
     if (res.errno) {
       ElMessage.success('添加todo成功');

@@ -15,9 +15,7 @@ import TodoFilter from "@/components/TodoFilter.vue";
 import TodoList from "@/components/TodoList.vue";
 import useTodos from "@/composables/useTodos";
 import useFilteredTodos from "@/composables/useFilteredTodos";
-import { getCurrentInstance, defineComponent, isRef, ref } from "vue";
-import { useStore } from "@/store";
-import { useRouter, useRoute } from "vue-router";
+import { defineComponent, ref } from "vue";
 
 export default defineComponent({
   name: "App",
@@ -27,15 +25,9 @@ export default defineComponent({
     TodoList,
   },
   setup() {
-    console.log(getCurrentInstance());
-    console.log(useRouter());
-    console.log(useRoute());
-    const store = useStore();
     const filter = ref<string>("all");
-    console.log(store.state.author);
     const { todos, addTodo } = useTodos();
     const { filteredTodos } = useFilteredTodos(filter);
-    console.log(isRef(filter));
     return {
       todos,
       filter,
@@ -45,7 +37,6 @@ export default defineComponent({
   },
   methods: {
     changeFilter(e: string) {
-      console.log(isRef(this.filter));
       this.filter = e;
     },
   },
