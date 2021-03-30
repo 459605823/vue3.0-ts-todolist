@@ -2,7 +2,7 @@
   <div class="todo-list">
     <todo-list-item
       v-for="todo in todos"
-      :key="todo._id"
+      :key="todo.id"
       @change-state="handleStateChange(todo, $event.target.checked)"
       :todo-item="todo"
     ></todo-list-item>

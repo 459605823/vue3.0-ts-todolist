@@ -8,11 +8,8 @@
       />
       {{ todoItem.content }}
       <span class="check-button"></span>
-      <i
-        class="el-icon-close"
-        @click.capture.prevent="handleDelete(todoItem.id)"
-      ></i>
     </label>
+    <i class="el-icon-close" @click="handleDelete(todoItem.id)"></i>
   </div>
 </template>
 
@@ -20,8 +17,8 @@
 import { defineComponent, PropType } from "vue";
 import { todo, response } from "@/types";
 import api from "@/api";
-import { useStore } from "@/store";
 import { ActionTypes } from "@/store/action-types";
+import { ElMessage } from "element-plus";
 
 export default defineComponent({
   name: "TodoListItem",
@@ -34,9 +31,15 @@ export default defineComponent({
   },
   methods: {
     async handleDelete(id: string) {
-      const res = await api.delete("todo/" + id).json<response>();
-      // const store = useStore();
-      // store.dispatch(ActionTypes.FETCH_TODOS);
+      if (id) {
+        const res = await api.delete("todo/" + id).json<response>();
+        if (res.errno) {
+          ElMessage.success("删除todo成功");
+          this.$store.dispatch(ActionTypes.FETCH_TODOS);
+        } else {
+          ElMessage.error("删除todo失败");
+        }
+      }
     },
   },
 });
@@ -44,10 +47,13 @@ export default defineComponent({
 
 <style>
 .todo-item {
+  position: relative;
   background: white;
   padding: 16px;
   border-radius: 8px;
   color: #626262;
+  display: flex;
+  align-items: center;
 }
 
 .todo-item label {
@@ -97,10 +103,10 @@ export default defineComponent({
   opacity: 1;
 }
 
-.todo-item label i {
+.todo-item i {
+  cursor: pointer;
   display: block;
   position: absolute;
-  right: 0;
-  z-index: 2;
+  right: 10px;
 }
 </style>
