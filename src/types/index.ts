@@ -12,6 +12,11 @@ export type todo = {
   completed: boolean;
 };
 
+export type user = {
+  username: string;
+  password: string;
+};
+
 export type filter = Partial<{
   label: string;
   value: string;

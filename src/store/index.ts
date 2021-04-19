@@ -6,7 +6,7 @@ import {
   CommitOptions,
   DispatchOptions,
 } from 'vuex';
-import { todo } from '@/types';
+import { todo, user } from '@/types';
 import { Getters, getters } from './getters';
 import { Mutations, mutations } from './mutations';
 import { Actions, actions } from './actions';
@@ -14,13 +14,16 @@ import { Actions, actions } from './actions';
 export const key: InjectionKey<VuexStore<State>> = Symbol();
 
 export interface State {
-  author: string;
+  user: user;
   todos: Array<todo>;
 }
 
 export const store = createStore<State>({
   state: {
-    author: 'wjn',
+    user: {
+      username: '',
+      password: '',
+    },
     todos: [],
   },
   getters,

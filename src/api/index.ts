@@ -3,6 +3,9 @@ import { ElMessage } from 'element-plus';
 const serverPort = 3000;
 const api = ky.create({
   prefixUrl: `//${window.location.hostname}:${serverPort}/api`,
+  headers: {
+    Authorization: localStorage.getItem('JWT_TOKEN') ?? '',
+  },
   retry: 0,
   hooks: {
     afterResponse: [
@@ -12,6 +15,8 @@ const api = ky.create({
           ElMessage.error(json.data);
         } else if (response.status === 500) {
           ElMessage.error('服务器错误');
+        } else if (response.status === 401) {
+          window.location.href = '/login';
         }
       },
     ],
