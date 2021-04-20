@@ -1,44 +1,56 @@
 <template>
-  <main>
-    <div class="container mx-auto px-10">
-      <h1>{{ type === "login" ? "登录" : "注册" }}</h1>
-      <div class="form-item">
-        <label for="username">用户名：</label>
-        <input
-          v-model="username"
-          type="text"
-          id="username"
-          class="rounded border-solid border"
-        />
-      </div>
-      <div class="form-item">
-        <label for="password">密 码：</label>
-        <input v-model="password" type="password" id="password" />
-      </div>
-      <button @click="handleUser('login')" v-if="type === 'login'" class="btn">
-        登录
-      </button>
-      <button
-        @click="handleUser('register')"
-        v-if="type === 'register'"
-        class="btn"
-      >
-        注册
-      </button>
-      <p @click="type = 'register'" class="info">没有账号? 去注册</p>
-      <div>
-        <span @click="githubLogin">github</span>
-      </div>
+  <div class="container mx-auto">
+    <h1 class="text-2xl mb-5">{{ type === "login" ? "登录" : "注册" }}</h1>
+    <div class="form-item">
+      <label for="username" class="form-item--label">用户名：</label>
+      <input
+        v-model="username"
+        type="text"
+        id="username"
+        class="form-item--input"
+      />
     </div>
-  </main>
+    <div class="form-item">
+      <label for="password" class="form-item--label">密 码：</label>
+      <input
+        v-model="password"
+        type="password"
+        id="password"
+        class="form-item--input"
+      />
+    </div>
+    <button @click="handleUser('login')" v-if="type === 'login'" class="btn">
+      登录
+    </button>
+    <button
+      @click="handleUser('register')"
+      v-if="type === 'register'"
+      class="btn"
+    >
+      注册
+    </button>
+    <div
+      class="form-footer flex justify-between content-center text-sm border-t border-gray-300 bg-gray-100 pt-2"
+      v-if="type === 'login'"
+    >
+      <div
+        @click="githubLogin"
+        class="w-10 h-10 rounded bg-github bg-cover cursor-pointer"
+      ></div>
+      <p
+        @click="type = 'register'"
+        class="text-gray-600 leading-10 cursor-pointer"
+      >
+        没有账号? 去注册
+      </p>
+    </div>
+  </div>
 </template>
 
 <script lang="ts">
 import { defineComponent, ref } from "vue";
 import api from "@/api";
 import { response } from "@/types";
-import { useStore } from "@/store";
-import { MutationTypes } from "@/store/mutation-types";
 import { ElMessage } from "element-plus";
 export default defineComponent({
   name: "Login",
@@ -46,7 +58,6 @@ export default defineComponent({
     const username = ref<string>("");
     const password = ref<string>("");
     const type = ref<string>("login");
-    const store = useStore();
     const handleUser = async (path: string) => {
       const res = await api
         .post(path, {
@@ -81,14 +92,14 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-.info {
-  font-size: 12px;
-  color: #aaa;
-  cursor: pointer;
-}
-
 .form-item {
-  @apply space-x-4 mt-4;
+  @apply mt-5;
+  &--label {
+    @apply block mb-2 text-sm font-medium text-gray-600 text-left;
+  }
+  &--input {
+    @apply block w-full p-3 rounded bg-gray-200 border border-transparent focus:outline-none;
+  }
 }
 
 .btn {

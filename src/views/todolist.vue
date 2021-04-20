@@ -1,11 +1,11 @@
 <template>
   <main>
     <div class="container">
-      <h1>欢迎 {{ user.username }} 使用待办事项</h1>
+      <h1 class="text-2xl mb-5">欢迎 {{ user.username }} 使用待办事项</h1>
       <todo-add :tid="todos.length" @add-todo="addTodo" />
       <todo-filter :selected="filter" @change-filter="changeFilter" />
       <todo-list :todos="filteredTodos" />
-      <p @click="logout" class="text-gray-500 cursor-pointer">登出</p>
+      <p @click="logout" class="text-gray-500 cursor-pointer mt-5">登出</p>
     </div>
   </main>
 </template>
