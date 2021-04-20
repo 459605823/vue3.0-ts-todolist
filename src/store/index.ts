@@ -22,7 +22,6 @@ export const store = createStore<State>({
   state: {
     user: {
       username: '',
-      password: '',
     },
     todos: [],
   },

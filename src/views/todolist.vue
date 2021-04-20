@@ -1,10 +1,11 @@
 <template>
   <main>
     <div class="container">
-      <h1>欢迎使用待办事项</h1>
+      <h1>欢迎 {{ user.username }} 使用待办事项</h1>
       <todo-add :tid="todos.length" @add-todo="addTodo" />
       <todo-filter :selected="filter" @change-filter="changeFilter" />
       <todo-list :todos="filteredTodos" />
+      <p @click="logout" class="text-gray-500 cursor-pointer">登出</p>
     </div>
   </main>
 </template>
@@ -15,7 +16,10 @@ import TodoFilter from "@/components/TodoFilter.vue";
 import TodoList from "@/components/TodoList.vue";
 import useTodos from "@/composables/useTodos";
 import useFilteredTodos from "@/composables/useFilteredTodos";
-import { defineComponent, ref } from "vue";
+import api from "@/api";
+import { defineComponent, ref, reactive } from "vue";
+import { response } from "@/types";
+import { MutationTypes } from "@/store/mutation-types";
 
 export default defineComponent({
   name: "Todolist",
@@ -28,16 +32,27 @@ export default defineComponent({
     const filter = ref<string>("all");
     const { todos, addTodo } = useTodos();
     const { filteredTodos } = useFilteredTodos(filter);
+    const user = reactive({});
     return {
       todos,
       filter,
       addTodo,
       filteredTodos,
+      user,
     };
+  },
+  async mounted() {
+    const res = await api.get("user").json<response>();
+    this.user = res.data;
+    this.$store.commit(MutationTypes.CHANGE_USER, this.user);
   },
   methods: {
     changeFilter(e: string) {
       this.filter = e;
+    },
+    logout() {
+      localStorage.removeItem("JWT_TOKEN");
+      window.location.href = "/login";
     },
   },
 });

@@ -5,6 +5,7 @@ import { ElMessage } from 'element-plus';
 import App from './App.vue';
 import router from './router';
 import { store, key } from './store';
+import './styles/index.css';
 
 createApp(App)
   .use(store, key)

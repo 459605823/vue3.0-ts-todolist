@@ -14,7 +14,6 @@ export type todo = {
 
 export type user = {
   username: string;
-  password: string;
 };
 
 export type filter = Partial<{
