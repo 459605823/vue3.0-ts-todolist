@@ -15,8 +15,8 @@
 
 <script lang="ts">
 import { defineComponent, PropType } from "vue";
-import { todo, response } from "@/types";
-import api from "@/api";
+import { todo } from "@/types";
+import {deleteTodo} from "@/api/todos";
 import { ActionTypes } from "@/store/action-types";
 import { ElMessage } from "element-plus";
 
@@ -32,8 +32,8 @@ export default defineComponent({
   methods: {
     async handleDelete(id: string) {
       if (id) {
-        const res = await api.delete("todo/" + id).json<response>();
-        if (res.errno) {
+        const {err} = await deleteTodo(id)
+        if (!err) {
           ElMessage.success("删除todo成功");
           this.$store.dispatch(ActionTypes.FETCH_TODOS);
         } else {

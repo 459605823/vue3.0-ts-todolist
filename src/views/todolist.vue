@@ -16,10 +16,8 @@ import TodoFilter from "@/components/TodoFilter.vue";
 import TodoList from "@/components/TodoList.vue";
 import useTodos from "@/composables/useTodos";
 import useFilteredTodos from "@/composables/useFilteredTodos";
-import api from "@/api";
 import { defineComponent, ref, reactive } from "vue";
-import { response } from "@/types";
-import { MutationTypes } from "@/store/mutation-types";
+import { MutationTypes } from '@/store/mutation-types';
 
 export default defineComponent({
   name: "Todolist",
@@ -41,17 +39,16 @@ export default defineComponent({
       user,
     };
   },
-  async mounted() {
-    const res = await api.get("user").json<response>();
-    this.user = res.data;
-    this.$store.commit(MutationTypes.CHANGE_USER, this.user);
+  mounted() {
+    this.user = this.$store.state.user.username ? this.$store.state.user : JSON.parse(localStorage.getItem('USER_DATA') as string);
   },
   methods: {
     changeFilter(e: string) {
       this.filter = e;
     },
     logout() {
-      localStorage.removeItem("JWT_TOKEN");
+      localStorage.removeItem("USER_DATA");
+      this.$store.commit(MutationTypes.SET_USER, {})
       window.location.href = "/login";
     },
   },

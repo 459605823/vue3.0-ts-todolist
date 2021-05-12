@@ -20,9 +20,7 @@ export interface State {
 
 export const store = createStore<State>({
   state: {
-    user: {
-      username: '',
-    },
+    user: {},
     todos: [],
   },
   getters,

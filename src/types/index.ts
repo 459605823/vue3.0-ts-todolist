@@ -13,16 +13,11 @@ export type todo = {
 };
 
 export type user = {
-  username: string;
+  username?: string;
+  token?: string
 };
 
 export type filter = Partial<{
   label: string;
   value: string;
 }>;
-
-export type response = {
-  data: any;
-  errno: number;
-  message: string;
-};

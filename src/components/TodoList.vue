@@ -11,8 +11,8 @@
 
 <script lang="ts">
 import { defineComponent, PropType } from "vue";
-import { todo, response } from "@/types";
-import api from "@/api";
+import { todo } from "@/types";
+import {updateTodo} from "@/api/todos";
 import TodoListItem from "./TodoListItem.vue";
 import { ElMessage } from "element-plus";
 
@@ -29,10 +29,8 @@ export default defineComponent({
   },
   methods: {
     async handleStateChange(todo: todo, checked: boolean) {
-      const res = await api
-        .put("todo/" + todo.id, { json: { completed: checked } })
-        .json<response>();
-      if (res.errno) {
+      const {err} = await updateTodo(todo.id, checked);
+      if (!err) {
         todo.completed = checked;
       } else {
         ElMessage.error("修改todo失败");

@@ -49,28 +49,24 @@
 
 <script lang="ts">
 import { defineComponent, ref } from "vue";
-import api from "@/api";
-import { response } from "@/types";
-import { ElMessage } from "element-plus";
+import { useStore } from '@/store'
+import { MutationTypes } from '@/store/mutation-types';
+import Router from '@/router'
+import { login, register } from '@/api/users'
 export default defineComponent({
   name: "Login",
   setup() {
     const username = ref<string>("");
     const password = ref<string>("");
     const type = ref<string>("login");
+    const store = useStore()
     const handleUser = async (path: string) => {
-      const res = await api
-        .post(path, {
-          json: { username: username.value, password: password.value },
-        })
-        .json<response>();
-      if (res.errno) {
-        const token = res.data;
-        localStorage.setItem("JWT_TOKEN", token);
-        // 本地token改变时要强制刷新页面，重新创建api获取新的token
-        window.location.href = "/";
-      } else {
-        ElMessage.error(res.data);
+      const apiFn = path === 'login' ? login : register
+      const {err, res} = await apiFn(username.value, password.value)
+      if (!err) {
+        localStorage.setItem("USER_DATA", JSON.stringify(res));
+        store.commit(MutationTypes.SET_USER, res)
+        Router.replace({path: '/'})
       }
     };
     return {

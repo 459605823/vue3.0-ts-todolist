@@ -1,14 +1,9 @@
 import { ComponentCustomProperties } from 'vue'
 import { Store } from 'vuex'
-import { Todo } from './types'
+import { State } from '@/store'
 
 declare module '@vue/runtime-core' {
   // Declare your own store states.
-  interface State {
-    author: string,
-    todos: Todo[]
-  }
-
   interface ComponentCustomProperties {
     $store: Store<State>
   }

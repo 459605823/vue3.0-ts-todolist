@@ -5,23 +5,23 @@
 <script lang="ts">
 import { defineComponent, onMounted } from "vue";
 import { useRoute } from "vue-router";
-import { ElMessage } from "element-plus";
-import api from "@/api";
-import { response } from "@/types";
+import {oauth} from "@/api/users";
+import { useStore } from '@/store'
+import { MutationTypes } from '@/store/mutation-types';
+import Router from '@/router'
 export default defineComponent({
   name: "oauth",
   setup: () => {
     onMounted(async () => {
       const route = useRoute();
       const code = route.query.code;
-      const res = await api.get("auth/redirect?code=" + code).json<response>();
-      if (res.errno) {
-        const { token } = res.data;
-        localStorage.setItem("JWT_TOKEN", token);
-        // 本地token改变时要强制刷新页面，重新创建api获取新的token
-        window.location.href = "/";
+      const store = useStore()
+      const {err, res} = await oauth(code);
+      if (!err) {
+        localStorage.setItem("JWT_TOKEN", JSON.stringify(res));
+        store.commit(MutationTypes.SET_USER, res)
+        Router.replace({path: '/'})
       } else {
-        ElMessage.error(res.data);
         window.location.href = "/login";
       }
     });
