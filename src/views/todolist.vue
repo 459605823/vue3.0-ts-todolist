@@ -11,25 +11,25 @@
 </template>
 
 <script lang="ts">
-import TodoAdd from "@/components/TodoAdd.vue";
-import TodoFilter from "@/components/TodoFilter.vue";
-import TodoList from "@/components/TodoList.vue";
-import useTodos from "@/composables/useTodos";
-import useFilteredTodos from "@/composables/useFilteredTodos";
-import { defineComponent, ref, reactive } from "vue";
-import { MutationTypes } from '@/store/mutation-types';
+import TodoAdd from '@/components/TodoAdd.vue';
+import TodoFilter from '@/components/TodoFilter.vue';
+import TodoList from '@/components/TodoList.vue';
+import useTodos from '@/composables/useTodos';
+import useFilteredTodos from '@/composables/useFilteredTodos';
+import {defineComponent, ref, reactive} from 'vue';
+import {MutationTypes} from '@/store/mutation-types';
 
 export default defineComponent({
-  name: "Todolist",
+  name: 'Todolist',
   components: {
     TodoAdd,
     TodoFilter,
     TodoList,
   },
   setup() {
-    const filter = ref<string>("all");
-    const { todos, addTodo } = useTodos();
-    const { filteredTodos } = useFilteredTodos(filter);
+    const filter = ref<string>('all');
+    const {todos, addTodo} = useTodos();
+    const {filteredTodos} = useFilteredTodos(filter);
     const user = reactive({});
     return {
       todos,
@@ -40,16 +40,18 @@ export default defineComponent({
     };
   },
   mounted() {
-    this.user = this.$store.state.user.username ? this.$store.state.user : JSON.parse(localStorage.getItem('USER_DATA') as string);
+    this.user = this.$store.state.user.username
+      ? this.$store.state.user
+      : JSON.parse(localStorage.getItem('USER_DATA') as string);
   },
   methods: {
     changeFilter(e: string) {
       this.filter = e;
     },
     logout() {
-      localStorage.removeItem("USER_DATA");
-      this.$store.commit(MutationTypes.SET_USER, {})
-      window.location.href = "/login";
+      localStorage.removeItem('USER_DATA');
+      this.$store.commit(MutationTypes.SET_USER, {});
+      window.location.href = '/login';
     },
   },
 });
@@ -60,7 +62,7 @@ export default defineComponent({
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-  font-family: Helvetica, "PingFang SC", "Microsoft Yahei", sans-serif;
+  font-family: Helvetica, 'PingFang SC', 'Microsoft Yahei', sans-serif;
 }
 
 /* 整个页面 */

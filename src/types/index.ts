@@ -14,7 +14,7 @@ export type todo = {
 
 export type user = {
   username?: string;
-  token?: string
+  token?: string;
 };
 
 export type filter = Partial<{

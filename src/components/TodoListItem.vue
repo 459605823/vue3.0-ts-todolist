@@ -1,5 +1,5 @@
 <template>
-  <div class="todo-item" :class="{ done: todoItem.completed }">
+  <div class="todo-item" :class="{done: todoItem.completed}">
     <label>
       <input
         type="checkbox"
@@ -14,15 +14,15 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType } from "vue";
-import { todo } from "@/types";
-import {deleteTodo} from "@/api/todos";
-import { ActionTypes } from "@/store/action-types";
-import { ElMessage } from "element-plus";
+import {defineComponent, PropType} from 'vue';
+import {todo} from '@/types';
+import {deleteTodo} from '@/api/todos';
+import {ActionTypes} from '@/store/action-types';
+import {ElMessage} from 'element-plus';
 
 export default defineComponent({
-  name: "TodoListItem",
-  emits: ["change-state"],
+  name: 'TodoListItem',
+  emits: ['change-state'],
   props: {
     todoItem: {
       type: Object as PropType<todo>,
@@ -32,12 +32,12 @@ export default defineComponent({
   methods: {
     async handleDelete(id: string) {
       if (id) {
-        const {err} = await deleteTodo(id)
+        const {err} = await deleteTodo(id);
         if (!err) {
-          ElMessage.success("删除todo成功");
+          ElMessage.success('删除todo成功');
           this.$store.dispatch(ActionTypes.FETCH_TODOS);
         } else {
-          ElMessage.error("删除todo失败");
+          ElMessage.error('删除todo失败');
         }
       }
     },
@@ -75,7 +75,7 @@ export default defineComponent({
 
 .todo-item label span.check-button::before,
 .todo-item label span.check-button::after {
-  content: "";
+  content: '';
   display: block;
   position: absolute;
   width: 18px;

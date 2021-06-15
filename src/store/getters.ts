@@ -1,6 +1,6 @@
-import { GetterTree } from 'vuex';
-import { todo } from '@/types';
-import { State } from './index';
+import {GetterTree} from 'vuex';
+import {todo} from '@/types';
+import {State} from './index';
 
 export interface Getters {
   doneTodos(state: State): todo[];
@@ -9,9 +9,9 @@ export interface Getters {
 
 export const getters: GetterTree<State, State> & Getters = {
   doneTodos(state) {
-    return state.todos.filter((todo) => todo.completed);
+    return state.todos.filter(todo => todo.completed);
   },
   undoneTodos(state) {
-    return state.todos.filter((todo) => !todo.completed);
+    return state.todos.filter(todo => !todo.completed);
   },
 };

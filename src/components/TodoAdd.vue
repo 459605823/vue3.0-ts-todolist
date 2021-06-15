@@ -13,8 +13,8 @@
 </template>
 
 <script lang="ts">
-import { ref, Ref, defineComponent } from "vue";
-import { useAutoFocus } from "@/composables/common";
+import {ref, Ref, defineComponent} from 'vue';
+import {useAutoFocus} from '@/composables/common';
 
 interface EmitReturn {
   todoContent: Ref<string>;
@@ -24,14 +24,14 @@ interface EmitReturn {
 function useEmitAddTodo(
   emit: (event: string, ...args: unknown[]) => void
 ): EmitReturn {
-  const todoContent = ref<string>("");
+  const todoContent = ref<string>('');
 
   const emitAddTodo = () => {
     const todo = {
       content: todoContent.value,
     };
-    emit("add-todo", todo);
-    todoContent.value = "";
+    emit('add-todo', todo);
+    todoContent.value = '';
   };
 
   return {
@@ -41,16 +41,16 @@ function useEmitAddTodo(
 }
 
 export default defineComponent({
-  name: "TodoAdd",
+  name: 'TodoAdd',
   props: {
     tid: {
       type: Number,
       required: true,
     },
   },
-  setup(props, { emit }) {
+  setup(props, {emit}) {
     const focusEl = useAutoFocus();
-    const { todoContent, emitAddTodo } = useEmitAddTodo(emit);
+    const {todoContent, emitAddTodo} = useEmitAddTodo(emit);
     return {
       focusEl,
       todoContent,

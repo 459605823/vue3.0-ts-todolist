@@ -1,4 +1,4 @@
-import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router';
+import {createRouter, createWebHistory, RouteRecordRaw} from 'vue-router';
 import Home from '../views/todolist.vue';
 import Login from '../views/login.vue';
 import Oauth from '../views/oauth.vue';

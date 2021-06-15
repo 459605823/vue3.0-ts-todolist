@@ -1,4 +1,4 @@
-import { ref, onMounted, customRef } from 'vue';
+import {ref, onMounted, customRef} from 'vue';
 
 export function useAutoFocus() {
   const focusEl = ref<null | HTMLElement>(null);

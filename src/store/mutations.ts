@@ -1,7 +1,7 @@
-import { MutationTree } from 'vuex';
-import { MutationTypes } from './mutation-types';
-import { todo, user } from '@/types';
-import { State } from './index';
+import {MutationTree} from 'vuex';
+import {MutationTypes} from './mutation-types';
+import {todo, user} from '@/types';
+import {State} from './index';
 
 export interface Mutations<S = State> {
   [MutationTypes.ADD_TODO](state: S, payload: todo): void;

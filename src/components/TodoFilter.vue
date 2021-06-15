@@ -5,28 +5,29 @@
       :key="filter.value"
       @click="$emit('change-filter', filter.value)"
       class="filter"
-      :class="{ active: selected == filter.value }"
-      >{{ filter.label }}</span
+      :class="{active: selected == filter.value}"
     >
+      {{ filter.label }}
+    </span>
   </div>
 </template>
 
 <script lang="ts">
-import { reactive, defineComponent } from "vue";
-import { filter } from "@/types";
+import {reactive, defineComponent} from 'vue';
+import {filter} from '@/types';
 export default defineComponent({
-  name: "TodoFilter",
+  name: 'TodoFilter',
   props: {
     selected: String,
   },
-  emits: ["change-filter"],
+  emits: ['change-filter'],
   setup() {
     const filters = reactive<filter[]>([
-      { label: "全部", value: "all" },
-      { label: "已完成", value: "done" },
-      { label: "未完成", value: "todo" },
+      {label: '全部', value: 'all'},
+      {label: '已完成', value: 'done'},
+      {label: '未完成', value: 'todo'},
     ]);
-    return { filters };
+    return {filters};
   },
 });
 </script>

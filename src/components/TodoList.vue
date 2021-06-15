@@ -10,14 +10,14 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType } from "vue";
-import { todo } from "@/types";
-import {updateTodo} from "@/api/todos";
-import TodoListItem from "./TodoListItem.vue";
-import { ElMessage } from "element-plus";
+import {defineComponent, PropType} from 'vue';
+import {todo} from '@/types';
+import {updateTodo} from '@/api/todos';
+import TodoListItem from './TodoListItem.vue';
+import {ElMessage} from 'element-plus';
 
 export default defineComponent({
-  name: "TodoList",
+  name: 'TodoList',
   components: {
     TodoListItem,
   },
@@ -33,7 +33,7 @@ export default defineComponent({
       if (!err) {
         todo.completed = checked;
       } else {
-        ElMessage.error("修改todo失败");
+        ElMessage.error('修改todo失败');
       }
     },
   },

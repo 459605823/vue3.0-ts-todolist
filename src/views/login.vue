@@ -1,6 +1,6 @@
 <template>
   <div class="container mx-auto">
-    <h1 class="text-2xl mb-5">{{ type === "login" ? "登录" : "注册" }}</h1>
+    <h1 class="text-2xl mb-5">{{ type === 'login' ? '登录' : '注册' }}</h1>
     <div class="form-item">
       <label for="username" class="form-item--label">用户名：</label>
       <input
@@ -48,25 +48,25 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from "vue";
-import { useStore } from '@/store'
-import { MutationTypes } from '@/store/mutation-types';
-import Router from '@/router'
-import { login, register } from '@/api/users'
+import {defineComponent, ref} from 'vue';
+import {useStore} from '@/store';
+import {MutationTypes} from '@/store/mutation-types';
+import Router from '@/router';
+import {login, register} from '@/api/users';
 export default defineComponent({
-  name: "Login",
+  name: 'Login',
   setup() {
-    const username = ref<string>("");
-    const password = ref<string>("");
-    const type = ref<string>("login");
-    const store = useStore()
+    const username = ref<string>('');
+    const password = ref<string>('');
+    const type = ref<string>('login');
+    const store = useStore();
     const handleUser = async (path: string) => {
-      const apiFn = path === 'login' ? login : register
-      const {err, res} = await apiFn(username.value, password.value)
+      const apiFn = path === 'login' ? login : register;
+      const {err, res} = await apiFn(username.value, password.value);
       if (!err) {
-        localStorage.setItem("USER_DATA", JSON.stringify(res));
-        store.commit(MutationTypes.SET_USER, res)
-        Router.replace({path: '/'})
+        localStorage.setItem('USER_DATA', JSON.stringify(res));
+        store.commit(MutationTypes.SET_USER, res);
+        Router.replace({path: '/'});
       }
     };
     return {
@@ -78,9 +78,9 @@ export default defineComponent({
   },
   methods: {
     githubLogin() {
-      const client_id = "7cb56203f4b43e7aea70";
-      const authorize_uri = "https://github.com/login/oauth/authorize";
-      const redirect_uri = "http://localhost:8080/auth/redirect";
+      const client_id = '7cb56203f4b43e7aea70';
+      const authorize_uri = 'https://github.com/login/oauth/authorize';
+      const redirect_uri = 'http://localhost:8080/auth/redirect';
       window.location.href = `${authorize_uri}?client_id=${client_id}&redirect_uri=${redirect_uri}`;
     },
   },

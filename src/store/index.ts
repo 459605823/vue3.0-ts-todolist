@@ -1,4 +1,4 @@
-import { InjectionKey } from 'vue';
+import {InjectionKey} from 'vue';
 import {
   createStore,
   useStore as baseUseStore,
@@ -6,10 +6,10 @@ import {
   CommitOptions,
   DispatchOptions,
 } from 'vuex';
-import { todo, user } from '@/types';
-import { Getters, getters } from './getters';
-import { Mutations, mutations } from './mutations';
-import { Actions, actions } from './actions';
+import {todo, user} from '@/types';
+import {Getters, getters} from './getters';
+import {Mutations, mutations} from './mutations';
+import {Actions, actions} from './actions';
 
 export const key: InjectionKey<VuexStore<State>> = Symbol();
 
@@ -36,13 +36,13 @@ export type Store = Omit<
   commit<K extends keyof Mutations, P extends Parameters<Mutations[K]>[1]>(
     key: K,
     payload: P,
-    options?: CommitOptions,
+    options?: CommitOptions
   ): ReturnType<Mutations[K]>;
 } & {
   dispatch<K extends keyof Actions>(
     key: K,
     payload?: Parameters<Actions[K]>[1],
-    options?: DispatchOptions,
+    options?: DispatchOptions
   ): ReturnType<Actions[K]>;
 } & {
   getters: {
