@@ -4,42 +4,42 @@
     <div class="form-item">
       <label for="username" class="form-item--label">用户名：</label>
       <input
+        id="username"
         v-model="username"
         type="text"
-        id="username"
         class="form-item--input"
       />
     </div>
     <div class="form-item">
       <label for="password" class="form-item--label">密 码：</label>
       <input
+        id="password"
         v-model="password"
         type="password"
-        id="password"
         class="form-item--input"
       />
     </div>
-    <button @click="handleUser('login')" v-if="type === 'login'" class="btn">
+    <button v-if="type === 'login'" class="btn" @click="handleUser('login')">
       登录
     </button>
     <button
-      @click="handleUser('register')"
       v-if="type === 'register'"
       class="btn"
+      @click="handleUser('register')"
     >
       注册
     </button>
     <div
-      class="form-footer flex justify-between content-center text-sm border-t border-gray-300 bg-gray-100 pt-2"
       v-if="type === 'login'"
+      class="form-footer flex justify-between content-center text-sm border-t border-gray-300 bg-gray-100 pt-2"
     >
       <div
-        @click="githubLogin"
         class="w-10 h-10 rounded bg-github bg-cover cursor-pointer"
+        @click="githubLogin"
       ></div>
       <p
-        @click="type = 'register'"
         class="text-gray-600 leading-10 cursor-pointer"
+        @click="type = 'register'"
       >
         没有账号? 去注册
       </p>
@@ -53,6 +53,7 @@ import {useStore} from '@/store';
 import {MutationTypes} from '@/store/mutation-types';
 import Router from '@/router';
 import {login, register} from '@/api/users';
+
 export default defineComponent({
   name: 'Login',
   setup() {
@@ -69,20 +70,19 @@ export default defineComponent({
         Router.replace({path: '/'});
       }
     };
+    const githubLogin = () => {
+      const client_id = '7cb56203f4b43e7aea70';
+      const authorize_uri = 'https://github.com/login/oauth/authorize';
+      const redirect_uri = 'http://localhost:8080/auth/redirect';
+      window.location.href = `${authorize_uri}?client_id=${client_id}&redirect_uri=${redirect_uri}`;
+    };
     return {
       username,
       password,
       handleUser,
       type,
+      githubLogin,
     };
-  },
-  methods: {
-    githubLogin() {
-      const client_id = '7cb56203f4b43e7aea70';
-      const authorize_uri = 'https://github.com/login/oauth/authorize';
-      const redirect_uri = 'http://localhost:8080/auth/redirect';
-      window.location.href = `${authorize_uri}?client_id=${client_id}&redirect_uri=${redirect_uri}`;
-    },
   },
 });
 </script>

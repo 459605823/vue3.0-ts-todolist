@@ -1,9 +1,9 @@
 import {onMounted} from 'vue';
+import {ElMessage} from 'element-plus';
 import {todo} from '@/types';
 import {useStore} from '@/store';
 import {ActionTypes} from '@/store/action-types';
 import {addTodo as addTodoApi} from '@/api/todos';
-import {ElMessage} from 'element-plus';
 
 export default function useTodos(): {
   todos: Array<todo>;

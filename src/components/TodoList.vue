@@ -3,18 +3,18 @@
     <todo-list-item
       v-for="todo in todos"
       :key="todo.id"
-      @change-state="handleStateChange(todo, $event.target.checked)"
       :todo-item="todo"
+      @change-state="handleStateChange(todo, $event.target.checked)"
     ></todo-list-item>
   </div>
 </template>
 
 <script lang="ts">
 import {defineComponent, PropType} from 'vue';
-import {todo} from '@/types';
+import {ElMessage} from 'element-plus';
+import {todo as Todo} from '@/types';
 import {updateTodo} from '@/api/todos';
 import TodoListItem from './TodoListItem.vue';
-import {ElMessage} from 'element-plus';
 
 export default defineComponent({
   name: 'TodoList',
@@ -23,19 +23,22 @@ export default defineComponent({
   },
   props: {
     todos: {
-      type: Array as PropType<todo[]>,
+      type: Array as PropType<Todo[]>,
       required: true,
     },
   },
-  methods: {
-    async handleStateChange(todo: todo, checked: boolean) {
+  setup() {
+    const handleStateChange = async (todo: Todo, checked: boolean) => {
       const {err} = await updateTodo(todo.id, checked);
       if (!err) {
         todo.completed = checked;
       } else {
         ElMessage.error('修改todo失败');
       }
-    },
+    };
+    return {
+      handleStateChange,
+    };
   },
 });
 </script>

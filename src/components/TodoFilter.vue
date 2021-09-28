@@ -3,9 +3,9 @@
     <span
       v-for="filter in filters"
       :key="filter.value"
-      @click="$emit('change-filter', filter.value)"
       class="filter"
       :class="{active: selected == filter.value}"
+      @click="$emit('change-filter', filter.value)"
     >
       {{ filter.label }}
     </span>
@@ -15,6 +15,7 @@
 <script lang="ts">
 import {reactive, defineComponent} from 'vue';
 import {filter} from '@/types';
+
 export default defineComponent({
   name: 'TodoFilter',
   props: {

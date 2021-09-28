@@ -9,12 +9,13 @@ import {oauth} from '@/api/users';
 import {useStore} from '@/store';
 import {MutationTypes} from '@/store/mutation-types';
 import Router from '@/router';
+
 export default defineComponent({
-  name: 'oauth',
+  name: 'Oauth',
   setup: () => {
     onMounted(async () => {
       const route = useRoute();
-      const code = route.query.code;
+      const {code} = route.query;
       const store = useStore();
       const {err, res} = await oauth(code);
       if (!err) {

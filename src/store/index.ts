@@ -11,7 +11,7 @@ import {Getters, getters} from './getters';
 import {Mutations, mutations} from './mutations';
 import {Actions, actions} from './actions';
 
-export const key: InjectionKey<VuexStore<State>> = Symbol();
+export const key: InjectionKey<VuexStore<State>> = Symbol('vuex');
 
 export interface State {
   user: user;

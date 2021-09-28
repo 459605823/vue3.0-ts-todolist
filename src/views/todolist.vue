@@ -5,19 +5,20 @@
       <todo-add :tid="todos.length" @add-todo="addTodo" />
       <todo-filter :selected="filter" @change-filter="changeFilter" />
       <todo-list :todos="filteredTodos" />
-      <p @click="logout" class="text-gray-500 cursor-pointer mt-5">登出</p>
+      <p class="text-gray-500 cursor-pointer mt-5" @click="logout">登出</p>
     </div>
   </main>
 </template>
 
 <script lang="ts">
+import {defineComponent, ref, onMounted, shallowRef} from 'vue';
 import TodoAdd from '@/components/TodoAdd.vue';
 import TodoFilter from '@/components/TodoFilter.vue';
 import TodoList from '@/components/TodoList.vue';
 import useTodos from '@/composables/useTodos';
 import useFilteredTodos from '@/composables/useFilteredTodos';
-import {defineComponent, ref, reactive} from 'vue';
 import {MutationTypes} from '@/store/mutation-types';
+import {useStore} from '@/store';
 
 export default defineComponent({
   name: 'Todolist',
@@ -30,29 +31,30 @@ export default defineComponent({
     const filter = ref<string>('all');
     const {todos, addTodo} = useTodos();
     const {filteredTodos} = useFilteredTodos(filter);
-    const user = reactive({});
+    const user = shallowRef({});
+    const store = useStore();
+    const changeFilter = (e: string) => {
+      filter.value = e;
+    };
+    const logout = () => {
+      localStorage.removeItem('USER_DATA');
+      store.commit(MutationTypes.SET_USER, {});
+      window.location.href = '/login';
+    };
+    onMounted(() => {
+      user.value = store.state.user.username
+        ? store.state.user
+        : JSON.parse(localStorage.getItem('USER_DATA') as string);
+    });
     return {
       todos,
       filter,
       addTodo,
+      changeFilter,
+      logout,
       filteredTodos,
       user,
     };
-  },
-  mounted() {
-    this.user = this.$store.state.user.username
-      ? this.$store.state.user
-      : JSON.parse(localStorage.getItem('USER_DATA') as string);
-  },
-  methods: {
-    changeFilter(e: string) {
-      this.filter = e;
-    },
-    logout() {
-      localStorage.removeItem('USER_DATA');
-      this.$store.commit(MutationTypes.SET_USER, {});
-      window.location.href = '/login';
-    },
   },
 });
 </script>

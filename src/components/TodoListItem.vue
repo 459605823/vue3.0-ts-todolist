@@ -15,20 +15,20 @@
 
 <script lang="ts">
 import {defineComponent, PropType} from 'vue';
+import {ElMessage} from 'element-plus';
 import {todo} from '@/types';
 import {deleteTodo} from '@/api/todos';
 import {ActionTypes} from '@/store/action-types';
-import {ElMessage} from 'element-plus';
 
 export default defineComponent({
   name: 'TodoListItem',
-  emits: ['change-state'],
   props: {
     todoItem: {
       type: Object as PropType<todo>,
       required: true,
     },
   },
+  emits: ['change-state'],
   methods: {
     async handleDelete(id: string) {
       if (id) {
